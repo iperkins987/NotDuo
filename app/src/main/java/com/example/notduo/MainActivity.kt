@@ -3,6 +3,7 @@ package com.example.notduo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -13,34 +14,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.notduo.ui.theme.NotDuoTheme
 
 class MainActivity : ComponentActivity() {
+    private val userRepository = UserRepository()
+    private val userViewModel: UserViewModel by viewModels { ViewModelFactory(userRepository) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NotDuoTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            SignUpScreen(userViewModel)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = name,
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NotDuoTheme {
-        Greeting("Welcome to NotDuo")
     }
 }
