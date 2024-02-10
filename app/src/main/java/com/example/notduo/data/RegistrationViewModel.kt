@@ -21,7 +21,12 @@ class RegistrationViewModel() : ViewModel() {
     private fun validatePassword() : Boolean {
         // TODO: Validate Password
 
-        // password == verifyPassword
+        // Compare password and verifyPassword
+        if (!password.equals(verifyPassword, ignoreCase = false)) {
+            validPassword = false
+        }
+
+        // FIXME: if password invalid when registering have to close app to try again
 
         // password meets requirements
             // contain 1 special char !@#$%^&*
