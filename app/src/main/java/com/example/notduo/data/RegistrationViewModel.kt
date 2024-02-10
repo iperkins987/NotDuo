@@ -20,6 +20,15 @@ class RegistrationViewModel() : ViewModel() {
 
     private fun validatePassword() : Boolean {
         // TODO: Validate Password
+
+        // password == verifyPassword
+
+        // password meets requirements
+            // contain 1 special char !@#$%^&*
+            // contain both lower and upper char
+            // contain 1 digit
+            // at least 8 chars
+
         return validPassword
     }
 
