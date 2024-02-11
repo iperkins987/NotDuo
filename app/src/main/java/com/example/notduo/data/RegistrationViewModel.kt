@@ -21,18 +21,41 @@ class RegistrationViewModel() : ViewModel() {
     private fun validatePassword() : Boolean {
         // TODO: Validate Password
 
+        // Booleans for each requirement
+        var lower by mutableStateOf(false)
+        var upper by mutableStateOf(false)
+        //var special by mutableStateOf(false)
+        var digit by mutableStateOf(false)
+        var length by mutableStateOf(false)
+        var verify by mutableStateOf(false)
+
         // Compare password and verifyPassword
-        if (!password.equals(verifyPassword, ignoreCase = false)) {
-            validPassword = false
+        if (password.equals(verifyPassword, ignoreCase = false)) {
+            verify = true
         }
 
         // FIXME: if password invalid when registering have to close app to try again
 
-        // password meets requirements
-            // contain 1 special char !@#$%^&*
-            // contain both lower and upper char
-            // contain 1 digit
-            // at least 8 chars
+        // Check if Password meets requirements
+
+        // At least 8 characters
+        if(password.length >= 8){ length = true }
+
+        for (i in password.indices){
+            // contains at least 1 lowercase
+            if(password[i].isLowerCase()){ lower = true }
+
+            // contains at least 1 uppercase
+            if(password[i].isUpperCase()){ upper = true }
+
+            // contains at least 1 digit
+            if(password[i].isDigit()){ digit = true }
+
+            // TODO: contains at least 1 special !@#$%^&*
+        }
+
+        // Only valid if all requirements are met
+        validPassword = verify && length && lower && upper && digit //&& special
 
         return validPassword
     }
