@@ -24,7 +24,7 @@ class RegistrationViewModel() : ViewModel() {
         // Booleans for each requirement
         var lower by mutableStateOf(false)
         var upper by mutableStateOf(false)
-        //var special by mutableStateOf(false)
+        var special by mutableStateOf(false)
         var digit by mutableStateOf(false)
         var length by mutableStateOf(false)
         var verify by mutableStateOf(false)
@@ -41,6 +41,9 @@ class RegistrationViewModel() : ViewModel() {
         // At least 8 characters
         if(password.length >= 8){ length = true }
 
+        // String containing recognized special characters
+        val specialChar = "!@#$%^&*_+-="
+
         for (i in password.indices){
             // contains at least 1 lowercase
             if(password[i].isLowerCase()){ lower = true }
@@ -51,11 +54,13 @@ class RegistrationViewModel() : ViewModel() {
             // contains at least 1 digit
             if(password[i].isDigit()){ digit = true }
 
-            // TODO: contains at least 1 special !@#$%^&*
+            // contains at least 1 special !@#$%^&*
+            if(specialChar.contains(password[i])) {special = true}
+
         }
 
         // Only valid if all requirements are met
-        validPassword = verify && length && lower && upper && digit //&& special
+        validPassword = verify && length && lower && upper && digit && special
 
         return validPassword
     }
