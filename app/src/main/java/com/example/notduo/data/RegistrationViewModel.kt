@@ -19,22 +19,18 @@ class RegistrationViewModel() : ViewModel() {
     var isRegistered by mutableStateOf(false)
 
     private fun validatePassword() : Boolean {
-        // TODO: Validate Password
-
         // Booleans for each requirement
-        var lower by mutableStateOf(false)
-        var upper by mutableStateOf(false)
-        var special by mutableStateOf(false)
-        var digit by mutableStateOf(false)
-        var length by mutableStateOf(false)
-        var verify by mutableStateOf(false)
+        var lower = false
+        var upper = false
+        var special = false
+        var digit = false
+        var length = false
+        var verify = false
 
         // Compare password and verifyPassword
         if (password.equals(verifyPassword, ignoreCase = false)) {
             verify = true
         }
-
-        // FIXME: if password invalid when registering have to close app to try again
 
         // Check if Password meets requirements
 
