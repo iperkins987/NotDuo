@@ -3,9 +3,13 @@ package com.example.notduo.data
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.notduo.util.Hasher
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class RegistrationViewModel() : ViewModel() {
     private val repository = UserRepository()
@@ -61,13 +65,28 @@ class RegistrationViewModel() : ViewModel() {
         return validPassword
     }
 
-    fun registerUser() {
+    suspend fun getToken(): String? {
+        return try {
+            FirebaseMessaging.getInstance().token.await()
+        } catch (e: Exception) {
+            null
+        }
+    }
 
-        if (validatePassword()) {
-            val passwordHash = Hasher.hashString(password)
-            val user = User(firstName, lastName, username, passwordHash)
-            repository.addUser(user)
-            isRegistered = true
+    fun registerUser() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val token = getToken()
+
+            if (token != null) {
+                if (validatePassword()) {
+                    val passwordHash = Hasher.hashString(password)
+                    val user = User(firstName, lastName, username, passwordHash, token)
+                    repository.addUser(user)
+                    isRegistered = true
+                }
+            } else {
+                // Handle the case where the token couldn't be retrieved
+            }
         }
     }
 }
