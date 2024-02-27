@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NotDuoTheme {
-                AppNavigation()
+                AppNavigation(this)
             }
         }
     }

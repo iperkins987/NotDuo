@@ -1,5 +1,6 @@
 package com.example.notduo.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,9 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notduo.data.RegistrationViewModel
+import com.example.notduo.data.SessionManager
 
 @Composable
-fun RegistrationScreen(navController: NavController, viewModel: RegistrationViewModel) {
+fun RegistrationScreen(navController: NavController, viewModel: RegistrationViewModel, context: Context) {
     Surface {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -110,6 +112,8 @@ fun RegistrationScreen(navController: NavController, viewModel: RegistrationView
             }
 
             if (viewModel.isRegistered) {
+                SessionManager.startUserSession(context, viewModel.username)
+
                 navController.navigate("mainApp") {
                     popUpTo("register") { inclusive = true }
                 }
