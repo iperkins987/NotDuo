@@ -63,7 +63,16 @@ fun RegistrationScreen(navController: NavController, viewModel: RegistrationView
                 value = viewModel.username,
                 onValueChange = {viewModel.username = it},
                 modifier = Modifier.fillMaxWidth(),
-                supportingText = {}
+                supportingText = {
+                    if (!viewModel.validUsername) {
+                        Text(
+                            "Username Already Taken!",
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Red
+                        )
+                    }
+
+                }
             )
 
             TextField(
