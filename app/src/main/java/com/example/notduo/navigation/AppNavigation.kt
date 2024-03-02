@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.notduo.data.MainAppViewModel
 import com.example.notduo.data.RegistrationViewModel
 import com.example.notduo.data.SessionManager
 import com.example.notduo.screens.MainAppScreen
@@ -45,7 +46,11 @@ fun AppNavigation(context: Context) {
                 val registrationViewModel = viewModel<RegistrationViewModel>()
                 RegistrationScreen(navController, registrationViewModel, context)
             }
-            composable("mainApp") { MainAppScreen() }
+
+            composable("mainApp") {
+                val mainAppViewModel = viewModel<MainAppViewModel>()
+                MainAppScreen(mainAppViewModel)
+            }
         }
     }
 }

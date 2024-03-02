@@ -5,5 +5,7 @@ data class User(
     val lastName: String = "",
     val username: String = "",
     val passwordHash: String = "",
-    val deviceToken: String = ""
+    val deviceToken: String = "",
+    val authToken: String = "NO_TOKEN",
+    val responseToken: String = "NO_TOKEN"
 )
