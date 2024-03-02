@@ -21,6 +21,18 @@ class RegistrationViewModel() : ViewModel() {
     var verifyPassword by mutableStateOf("")
     var validPassword by mutableStateOf(true)
     var isRegistered by mutableStateOf(false)
+    var validUsername by mutableStateOf(true)
+
+    suspend fun validateUsername() : Boolean {
+        // Check if username already taken
+
+        if(repository.getUser(username) != null){
+            // username already exists
+            validUsername = false
+        }
+
+        return validUsername
+    }
 
     private fun validatePassword() : Boolean {
         // Booleans for each requirement
@@ -78,11 +90,13 @@ class RegistrationViewModel() : ViewModel() {
             val token = getToken()
 
             if (token != null) {
-                if (validatePassword()) {
-                    val passwordHash = Hasher.hashString(password)
-                    val user = User(firstName, lastName, username, passwordHash, token)
-                    repository.addUser(user)
-                    isRegistered = true
+                if(validateUsername()) {
+                    if (validatePassword()) {
+                        val passwordHash = Hasher.hashString(password)
+                        val user = User(firstName, lastName, username, passwordHash, token)
+                        repository.addUser(user)
+                        isRegistered = true
+                    }
                 }
             } else {
                 // Handle the case where the token couldn't be retrieved
