@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -49,7 +50,7 @@ fun AppNavigation(context: Context) {
 
             composable("mainApp") {
                 val mainAppViewModel = viewModel<MainAppViewModel>()
-                MainAppScreen(mainAppViewModel)
+                MainAppScreen(mainAppViewModel, context as FragmentActivity)
             }
         }
     }

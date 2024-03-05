@@ -5,15 +5,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentActivity
 import com.example.notduo.data.MainAppViewModel
 
 @Composable
-fun MainAppScreen(viewModel: MainAppViewModel) {
+fun MainAppScreen(viewModel: MainAppViewModel, activity: FragmentActivity) {
 
     if (viewModel.isAuth) {
         Text("Auth Token is ${viewModel.authToken}")
         Button(
-            onClick = { viewModel.sendResponse(viewModel.authToken) },
+            onClick = { viewModel.authenticate(activity) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("AUTHENTICATE")
