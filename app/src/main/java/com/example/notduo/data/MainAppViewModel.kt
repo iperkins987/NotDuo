@@ -65,11 +65,11 @@ class MainAppViewModel() : ViewModel() {
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    sendResponse(authToken)
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
+                    sendResponse(authToken)
                 }
 
                 override fun onAuthenticationFailed() {
