@@ -38,7 +38,7 @@ class UserRepository {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                
+
                 // Getting Post failed, log a message
                 Log.w("ERROR", "loadPost:onCancelled", databaseError.toException())
             }
