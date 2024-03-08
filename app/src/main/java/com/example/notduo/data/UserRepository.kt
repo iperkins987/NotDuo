@@ -14,14 +14,20 @@ class UserRepository {
     private val userRef = database.getReference("users")
 
     fun addUser(user: User) {
+
+        // Add a user to the database
         userRef.child(user.username).setValue(user)
     }
 
     fun addResponseToken(username: String, token: String) {
+
+        // send response token to the database
         userRef.child(username).child("responseToken").setValue(token)
     }
 
     fun onAuthUpdate(username: String, callback: (String) -> Unit) {
+
+        // Listen for new auth tokens and call the callback if it changes
         val authListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue<User>()
@@ -32,6 +38,7 @@ class UserRepository {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                
                 // Getting Post failed, log a message
                 Log.w("ERROR", "loadPost:onCancelled", databaseError.toException())
             }
@@ -41,11 +48,12 @@ class UserRepository {
     }
 
     suspend fun getUser(username: String) : User? {
+
+        // Try to return a user object
         return try {
             val snapshot = userRef.child(username).get().await()
             snapshot.getValue<User>()
         } catch (e: Exception) {
-            // Handle the error appropriately
             null
         }
     }

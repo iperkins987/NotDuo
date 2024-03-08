@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.biometric.BiometricPrompt
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import android.os.Build
 import androidx.annotation.RequiresApi
 
@@ -34,23 +33,26 @@ class MainAppViewModel() : ViewModel() {
 
     fun onAuthUpdate(authToken: String) {
 
-        // If not already authenticated
+        // Make sure the auth token is valid
         if (authToken != "NO_TOKEN") {
 
-            // Update authentication state
+            // We are ready to authenticate
             isAuth = true
 
-            // Assign authToken property with input
+            // Update the auth token
             this.authToken = authToken
         }
     }
 
     fun sendResponse(response: String) {
-        // Sends response to repository containing username
+
+        // Update the response token, the server will compare this to the token it generated
         repository.addResponseToken(username, response)
     }
 
     fun authenticate(activity: FragmentActivity) {
+        // All of this is just boiler plate biometric code
+
         val executor = ContextCompat.getMainExecutor(activity)
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -69,6 +71,8 @@ class MainAppViewModel() : ViewModel() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
+
+                    // If the biometric succeeds then send the response token back to the server
                     sendResponse(authToken)
                 }
 

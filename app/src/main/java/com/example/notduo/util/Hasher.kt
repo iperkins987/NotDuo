@@ -4,6 +4,8 @@ import java.security.MessageDigest
 
 object Hasher {
     fun hashString(input: String): String {
+        // Standard hashing SHA256
+
         return MessageDigest
             .getInstance("SHA-256")
             .digest(input.toByteArray())
